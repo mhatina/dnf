@@ -1,5 +1,8 @@
+%global commit 854e61a4492cb733fe832658ee30d214bc39572f 
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+
 %global hawkey_version 0.10.1
-%global librepo_version 1.7.19
+%global librepo_version 1.8.0
 %global libcomps_version 0.1.8
 %global rpm_version 4.13.0-0.rc1.29
 %global min_plugins_core 2.1.3
@@ -204,7 +207,7 @@ Requires(postun): systemd
 Alternative CLI to "dnf upgrade" suitable for automatic, regular execution.
 
 %prep
-%autosetup
+%autosetup -n %{name}-%{commit} -p1
 mkdir build
 %if %{with python3}
 mkdir build-py3
