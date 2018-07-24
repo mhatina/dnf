@@ -204,6 +204,7 @@ class ModuleCommand(commands.Command):
         def run_on_module(self):
             for module_spec in self.opts.module_nsvp:
                 self.base.repo_module_dict.reset_to_default(module_spec, True)
+                logger.info("Default stream will be used for '{}'".format(module_spec))
 
     SUBCMDS = {ListSubCommand, InfoSubCommand, EnableSubCommand,
                DisableSubCommand, InstallSubCommand, UpdateSubCommand,
