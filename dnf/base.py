@@ -298,7 +298,8 @@ class Base(object):
         for repo_module in self.repo_module_dict.values():
             if repo_module.conf.enabled._get():
                 update_include_nevras(repo_module.name, repo_module.conf.stream._get())
-            elif repo_module.defaults.peek_default_stream():
+            elif repo_module.conf.enabled_defaults._get() and \
+                    repo_module.defaults.peek_default_stream():
                 update_include_nevras(repo_module.name, repo_module.defaults.peek_default_stream())
 
             exclude_set, _ = self.repo_module_dict.get_excludes(repo_module.name)

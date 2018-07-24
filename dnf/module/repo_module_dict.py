@@ -206,6 +206,16 @@ class RepoModuleDict(OrderedDict):
                         nevra_epoch_ensured in version.artifacts():
                     version.repo_module.enable(version.stream, True)
 
+    def reset_to_default(self, module_spec, save_immediately=False):
+        subj = ModuleSubject(module_spec)
+        module_version, module_form = subj.find_module_version(self)
+
+        module_version.repo_module.reset_to_default()
+
+        if save_immediately:
+            self.base._module_persistor.commit()
+            self.base._module_persistor.save()
+
     def enable(self, module_spec, save_immediately=False):
         subj = ModuleSubject(module_spec)
         module_version, module_form = subj.find_module_version(self)
@@ -658,7 +668,7 @@ class RepoModuleDict(OrderedDict):
                 available_profiles = i.profiles
                 installed_profiles = []
 
-                if i.stream == defaults_conf.peek_default_stream():
+                if conf.enabled_defaults._get() and i.stream == defaults_conf.peek_default_stream():
                     default_str = " [d]"
 
                 if i.stream == conf.stream._get() and conf.enabled._get():

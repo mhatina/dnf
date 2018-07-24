@@ -192,9 +192,23 @@ class ModuleCommand(commands.Command):
         def run_on_module(self):
             self.base.repo_module_dict.print_what_provides(self.opts.module_nsvp)
 
+    class ResetToDefaultsSubCommand(SubCommand):
+        aliases = ("reset-to-default",)
+
+        def configure(self):
+            demands = self.cli.demands
+            demands.available_repos = True
+            demands.sack_activation = True
+            demands.root_user = True
+
+        def run_on_module(self):
+            for module_spec in self.opts.module_nsvp:
+                self.base.repo_module_dict.reset_to_default(module_spec, True)
+
     SUBCMDS = {ListSubCommand, InfoSubCommand, EnableSubCommand,
                DisableSubCommand, InstallSubCommand, UpdateSubCommand,
-               RemoveSubCommand, ProfileInfoSubCommand, StreamsSubCommand, ProvidesSubCommand}
+               RemoveSubCommand, ProfileInfoSubCommand, StreamsSubCommand,
+               ProvidesSubCommand, ResetToDefaultsSubCommand}
 
     SUBCMDS_NOT_REQUIRED_ARG = {ListSubCommand, StreamsSubCommand}
 

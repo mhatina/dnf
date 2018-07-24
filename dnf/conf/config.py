@@ -621,6 +621,7 @@ class ModuleConf(BaseConfig):
         self.profiles = ListOption([])
         # enable/disable a module
         self.enabled = BoolOption(True)
+        self.enabled_defaults = BoolOption(True)
 
     def _write(self, fileobj):
         output = "[{}]\n".format(self._section)
@@ -629,5 +630,6 @@ class ModuleConf(BaseConfig):
         output += "version = {}\n".format(self.version._get())
         output += "profiles = {}\n".format(",".join(self.profiles._get()))
         output += "enabled = {}\n".format(self.enabled._get())
+        output += "enabled_defaults = {}\n".format(self.enabled_defaults._get())
 
         fileobj.write(output)

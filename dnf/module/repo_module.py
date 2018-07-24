@@ -72,6 +72,9 @@ class RepoModule(OrderedDict):
         self.name = repo_module_version.name
         repo_module_version.repo_module = self
 
+    def reset_to_default(self):
+        self.parent.base._module_persistor.set_data(self, enabled_defaults=True)
+
     def enable(self, stream, assumeyes=False):
         if stream not in self:
             raise NoStreamException("{}:{}".format(self.name, stream))
@@ -98,7 +101,8 @@ class RepoModule(OrderedDict):
                                                     version=-1, profiles=[])
 
     def disable(self):
-        self.parent.base._module_persistor.set_data(self, enabled=False, profiles=[])
+        self.parent.base._module_persistor.set_data(self, enabled=False, enabled_defaults=False,
+                                                    profiles=[])
 
     def write_conf_to_file(self):
         output_file = os.path.join(self.parent.get_modules_dir(),
