@@ -290,7 +290,7 @@ class Base(object):
 
     def use_module_includes(self):
         def update_include_nevras(name, stream):
-            include_set, _ = self.repo_module_dict.get_includes(name, stream)
+            include_set = self.repo_module_dict.get_includes(name, stream)
             include_nevras_set.update(include_set)
 
         include_nevras_set = set()
@@ -303,7 +303,7 @@ class Base(object):
                     repo_module.defaults.peek_default_stream():
                 update_include_nevras(repo_module.name, repo_module.defaults.peek_default_stream())
 
-            exclude_set, _ = self.repo_module_dict.get_excludes(repo_module.name)
+            exclude_set = self.repo_module_dict.get_excludes(repo_module.name)
             exclude_nevras_set.update(exclude_set)
 
         # collect all hotfix repo repoids - we don't filter them at all
